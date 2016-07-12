@@ -39,17 +39,17 @@ io.on('connection', function (socket) {
   console.log(socket.id);
 
   socket.on('turn:left', function (data) {
-    motor.rev(100);
+    turn.rev(100);
     console.log('TURN LEFT RECEIVED');
   });
 
   socket.on('turn:right', function (data) {
-    motor.fwd(100);
+    turn.fwd(100);
     console.log('TURN RIGHT RECEIVED');
   });
 
   socket.on('turn:off', function (data) {
-    motor.stop();
+    turn.stop();
     console.log('TURN OFF RECEIVED');
   });
 });
