@@ -1,6 +1,3 @@
-
-
-// server.js
 var express = require('express');
 var app = express();
 var httpServer = require("http").createServer(app);
@@ -17,39 +14,44 @@ app.get('/', function(req, res) {
 });
 
 httpServer.listen(port);
-console.log('Server available at http://localhost:' + port);
-var motor;
+console.log('Server available at http://raspi:' + port);
 
 //RPi board connection
-
 var board = new five.Board({
   io: new raspi()
 });
+
+var turn;
+
 board.on("ready", function() {
-    console.log('Bot connected');
-    motor = new five.Motor({
-	pins: [1,2],
-	invertPWM: true
-	});
-	
-	motor.stop();
+  console.log('Bot connected');
+  turn = new five.Motor({
+    pins: [1,2],
+    invertPWM: true
+  });
+
+	turn.stop();
 });
 
 
 //Socket connection handler
 io.on('connection', function (socket) {
-        console.log(socket.id);
+  console.log(socket.id);
 
-        socket.on('motor:on', function (data) {
-           motor.fwd(100);
-           console.log('MOTOR ON RECEIVED');
-        });
+  socket.on('turn:left', function (data) {
+    motor.rev(100);
+    console.log('TURN LEFT RECEIVED');
+  });
 
-        socket.on('motor:off', function (data) {
-            motor.stop();
-            console.log('MOTOR OFF RECEIVED');
+  socket.on('turn:right', function (data) {
+    motor.fwd(100);
+    console.log('TURN RIGHT RECEIVED');
+  });
 
-        });
-    });
+  socket.on('turn:off', function (data) {
+    motor.stop();
+    console.log('TURN OFF RECEIVED');
+  });
+});
 
 console.log('Waiting for connection');

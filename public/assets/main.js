@@ -2,14 +2,24 @@ var socket = io.connect();
 
 $(document).ready(function(){
 
-  $('#on').on('click', function(){
-    socket.emit('motor:on');
-    console.log('MOTOR ON');
+  $('#left').mousedown(function(){
+    socket.emit('turn:left');
+    console.log('TURN LEFT');
   })
 
-  $('#off').on('click', function(){
-    socket.emit('motor:off');
-    console.log('MOTOR OFF');
+  $('#right').mousedown(function(){
+    socket.emit('turn:right');
+    console.log('TURN LEFT');
+  })
+
+  $('#right, #left').mouseup(function(){
+    socket.emit('turn:off');
+    console.log('TURN LEFT');
+  })
+
+  $('#right, #left').mouseleave(function(){
+    socket.emit('turn:off');
+    console.log('TURN LEFT');
   })
 
 });
