@@ -42,9 +42,9 @@ $(document).ready(function(){
     console.log('DRIVE STOP')
   });
 
-  $('#pwr').on('change mousemove', function(){
-    socket.emit('updatePwr', $(this).value())
-    console.log('UPDATE PWR TO: ' + $(this).value())
+  $('#pwr').on('change', function(){
+    socket.emit('updatePwr', $(this).val())
+    console.log('UPDATE DRIVE PWR TO: ' + $(this).val())
   });
 
 });
