@@ -36,7 +36,7 @@ $(document).ready(function(){
       case 65:
       case 39:
       case 68:
-        socket.emit('turn:left');
+        socket.emit('turn:off');
         break;
       default:
     }
