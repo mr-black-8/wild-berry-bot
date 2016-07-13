@@ -33,7 +33,7 @@ board.on("ready", function() {
   });
 
   drive = new five.Motor({
-    pins: [26, 22],
+    pins: [23, 22],
     invertPWM: true
   });
 

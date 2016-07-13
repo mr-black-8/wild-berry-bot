@@ -2,6 +2,46 @@ var socket = io.connect();
 
 $(document).ready(function(){
 
+  $(document).keydown(function(event){
+    switch (event.which) {
+      case 38:
+      case 87:
+        socket.emit('drive:fwd');
+        break;
+      case 40:
+      case 83:
+        socket.emit('drive:rev');
+        break;
+      case 37:
+      case 65:
+        socket.emit('turn:left');
+        break;
+      case 39:
+      case 68:
+        socket.emit('turn:right');
+        break;
+      default:
+    }
+  });
+
+  $(document).keyup(function(event){
+    switch (event.which) {
+      case 38:
+      case 87:
+      case 40:
+      case 83:
+        socket.emit('drive:stop');
+        break;
+      case 37:
+      case 65:
+      case 39:
+      case 68:
+        socket.emit('turn:left');
+        break;
+      default:
+    }
+  });
+
   $('#left').mousedown(function(){
     socket.emit('turn:left');
     console.log('TURN LEFT');
