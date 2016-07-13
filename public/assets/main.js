@@ -2,7 +2,7 @@ var socket = io.connect();
 
 $(document).ready(function(){
 
-  $(document).keydown(function(event){
+  $("body").keydown(function(event){
     switch (event.which) {
       case 38:
       case 87:
@@ -24,7 +24,7 @@ $(document).ready(function(){
     }
   });
 
-  $(document).keyup(function(event){
+  $("body").keyup(function(event){
     switch (event.which) {
       case 38:
       case 87:
