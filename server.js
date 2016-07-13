@@ -22,35 +22,63 @@ var board = new five.Board({
 });
 
 var turn;
+var drive;
+var drivePwr;
 
 board.on("ready", function() {
   console.log('Bot connected');
   turn = new five.Motor({
-    pins: [1,2],
+    pins: [1, 2],
     invertPWM: true
   });
 
+  drive = new five.Motor({
+    pins: [26, 22],
+    invertPWM: true
+  });
+
+  drivePwr = 100;
 	turn.stop();
+  drive.stop();
 });
 
 
+
 //Socket connection handler
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
   console.log(socket.id);
 
-  socket.on('turn:left', function (data) {
-    turn.rev(100);
+  socket.on('turn:left', function(data) {
+    turn.rev(200);
     console.log('TURN LEFT RECEIVED');
   });
 
-  socket.on('turn:right', function (data) {
-    turn.fwd(100);
+  socket.on('turn:right', function(data) {
+    turn.fwd(200);
     console.log('TURN RIGHT RECEIVED');
   });
 
-  socket.on('turn:off', function (data) {
+  socket.on('turn:off', function(data) {
     turn.stop();
-    console.log('TURN OFF RECEIVED');
+  });
+
+  socket.on('drive:fwd', function(data){
+    drive.fwd(drivePwr);
+    console.log('DRIVE FWD RECEIVED');
+  });
+
+  socket.on('drive:rev', function(data){
+    drive.rev(drivePwr);
+    console.log('DRIVE REV RECEIVED');
+  });
+
+  socket.on('drive:stop', function(data){
+    drive.stop();
+  });
+
+  socket.on('updatePwr', function(data){
+    drivePwr = data;
+    console.log('NEW DRIVE POWER: ' + data);
   });
 });
 
