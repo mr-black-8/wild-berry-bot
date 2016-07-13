@@ -60,20 +60,22 @@ io.on('connection', function(socket) {
 
   socket.on('turn:off', function(data) {
     turn.stop();
+    console.log('TURN OFF RECEIVED')
   });
 
   socket.on('drive:fwd', function(data){
     drive.fwd(drivePwr);
-    console.log('DRIVE FWD RECEIVED');
+    console.log('DRIVE FWD RECEIVED PWR: ' + drivePwr);
   });
 
   socket.on('drive:rev', function(data){
     drive.rev(drivePwr);
-    console.log('DRIVE REV RECEIVED');
+    console.log('DRIVE REV RECEIVED PWR: ' + drivePwr);
   });
 
   socket.on('drive:stop', function(data){
     drive.stop();
+    console.log('DRIVE STOP RECEIVED');
   });
 
   socket.on('updatePwr', function(data){
