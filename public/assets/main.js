@@ -100,8 +100,7 @@ $(document).ready(function(){
   });
 
   // update img url as received
-  socket.on('livestream', function(url) {
-    console.log('received livestream call from server.')
-    $("#stream").attr('src', url)
+  socket.on('stream-init', function(url) {
+    $("#stream").attr('src', '192.168.1.2:9000/?action=stream')
   });
 });

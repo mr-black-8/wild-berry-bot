@@ -40,7 +40,7 @@ board.on("ready", function() {
     invertPWM: true
   });
 
-  drivePwr = 100;
+  drivePwr = 175;
 	turn.stop();
   drive.stop();
 });
@@ -87,22 +87,28 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start-stream', function(){
-    console.log('MJPEG stream initiated')
 
-    var args = ["-w", "480", "-h", "360", "-o", "./public/stream/image_stream.jpg", "-t", "999999999", "-tl", "50", "-n"];
-    proc = spawn('raspistill', args);
-
-    app.set('watchingFile', true);
-    fs.watchFile('./public/stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
-      socket.emit('livestream', 'stream/image_stream.jpg?_t=' + (Math.random() * 100000));
-    })
+    var startStream = spawn('sh', 'start-stream.sh');
+    socket.emit('stream-init');
+    console.log('MJPEG stream initiated');
+    
+    // var args = ["-w", "480", "-h", "360", "-o", "./public/stream/image_stream.jpg", "-t", "999999999", "-tl", "50", "-n"];
+    // proc = spawn('raspistill', args);
+    //
+    // app.set('watchingFile', true);
+    // fs.watchFile('./public/stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
+    //   socket.emit('livestream', 'stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+    // })
   })
 
   socket.on('stop-stream', function(){
+
+    var startStream = spawn('sh', 'stop-stream.sh')
     console.log('MJPEG steam terminated')
-    app.set('watchingFile', false);
-    if (proc) proc.kill();
-    fs.unwatchFile('./stream/image_stream.jpg');
+
+    // app.set('watchingFile', false);
+    // if (proc) proc.kill();
+    // fs.unwatchFile('./stream/image_stream.jpg');
   })
 });
 
