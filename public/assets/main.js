@@ -89,15 +89,18 @@ $(document).ready(function(){
 // MJPEG handler
   // send request to start stream on page load
   $("#play").on('click', function() {
+    console.log('sent start-stream call')
     socket.emit('start-stream');
   });
 
   $("#pause").on('click', function() {
+    console.log('sent stop-stream call')
     socket.emit('stop-stream');
   });
 
   // update img url as received
   socket.on('livestream', function(url) {
+    console.log('received livestream call from server.')
     $("#stream").attr('src', url)
   });
 });

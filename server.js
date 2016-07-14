@@ -86,21 +86,25 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start-stream', function(){
+    console.log('start-stream received')
     startStreaming(io);
   })
 
   socket.on('stop-stream', function(){
+    console.log('stop-stream received')
     stopStreaming(io);
   })
 });
 
 function stopStreaming() {
+  console.log('stopStreaming function initiated')
   app.set('watchingFile', false);
   if (proc) proc.kill();
   fs.unwatchFile('./stream/image_stream.jpg');
 }
 
 function startStreaming(io) {
+  console.log('startStreaming function initiated')
   if (app.get('watchingFile')) {
     io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
     return;
