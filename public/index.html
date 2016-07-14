@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
   <title>WildBerryBot - Command Centre</title>
   <link rel="stylesheet" href="assets/style.css">
+  <script src="https://use.fontawesome.com/8e414f32d6.js"></script>
 </head>
 <body>
   <script src="lib/socket.io-client/socket.io.js"></script>
@@ -11,21 +13,28 @@
   <script src="assets/main.js"></script>
 
   <h1>WildBerryBot</h1>
-  <div class="container">
-    <div class="controls">
-      <button id="left">Left</button>
-      <button id="right">Right</button>
-      <button id="fwd">Forward</button>
-      <button id="rev">Reverse</button>
-      <input id='pwr' type="range" min="100" max="255" step="1" value="175">
-    </div>
-    <div class="mjpeg">
-      <img src="" id="stream">
-    </div>
-    <button id="play">Play</button>
-    <button id="pause">Pause</button>
-    <div class="dpad">
 
+  <div class="container">
+    <div class="content">
+
+      <input id='pwr' type="range" min="100" max="255" step="1" value="175">
+
+      <div class="mjpeg">
+        <img src="" id="stream">
+      </div>
+
+      <div class="controls">
+        <button id="left"><i class="fa  fa-arrow-circle-left fa-3x"></i></button>
+        <button id="fwd"><i  class="fa  fa-arrow-circle-up fa-3x"></i></button>
+        <button id="right"><i class="fa  fa-arrow-circle-right fa-3x"></i></button>
+        <button id="rev"><i  class="fa  fa-arrow-circle-down fa-3x"></i></button>
+      </div>
+
+      <!-- <button id="play">Play</button>
+      <button id="pause">Pause</button> -->
+      <div class="dpad">
+
+      </div>
     </div>
   </div>
 
