@@ -69,8 +69,8 @@ io.on('connection', function(socket) {
   });
 
   socket.on('drive:rev', function(data){
-    drive.rev(drivePwr/2);
-    console.log('DRIVE REV RECEIVED PWR: ' + drivePwr/2);
+    drive.rev(drivePwr);
+    console.log('DRIVE REV RECEIVED PWR: ' + drivePwr);
   });
 
   socket.on('drive:stop', function(data){
