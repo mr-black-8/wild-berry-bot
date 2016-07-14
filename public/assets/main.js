@@ -101,6 +101,6 @@ $(document).ready(function(){
 
   // update img url as received
   socket.on('stream-init', function(url) {
-    $("#stream").attr('src', '192.168.1.2:9000/?action=stream')
+    $("#stream").attr('src', 'http://192.168.1.2:9001/?action=stream')
   });
 });

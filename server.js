@@ -49,7 +49,8 @@ board.on("ready", function() {
 
 //Socket connection handler
 io.on('connection', function(socket) {
-  console.log(socket.id);
+  console.log(socket.id, "Is now connected");
+  var startStream = spawn('sh', ['start-stream.sh']);
 
   socket.on('turn:left', function(data) {
     turn.rev(200);
@@ -88,10 +89,10 @@ io.on('connection', function(socket) {
 
   socket.on('start-stream', function(){
 
-    var startStream = spawn('sh', 'start-stream.sh');
+    var startStream = spawn('sh', ['start-stream.sh']);
     socket.emit('stream-init');
     console.log('MJPEG stream initiated');
-    
+
     // var args = ["-w", "480", "-h", "360", "-o", "./public/stream/image_stream.jpg", "-t", "999999999", "-tl", "50", "-n"];
     // proc = spawn('raspistill', args);
     //
@@ -103,7 +104,7 @@ io.on('connection', function(socket) {
 
   socket.on('stop-stream', function(){
 
-    var startStream = spawn('sh', 'stop-stream.sh')
+    var startStream = spawn('sh', ['stop-stream.sh'])
     console.log('MJPEG steam terminated')
 
     // app.set('watchingFile', false);
