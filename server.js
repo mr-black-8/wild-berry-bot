@@ -8,6 +8,7 @@ var fs = require('fs')
 var spawn = require('child_process').spawn
 
 var port = 3000;
+var proc;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -116,7 +117,7 @@ function startStreaming(io) {
   console.log('Watching for changes...');
   app.set('watchingFile', true);
   fs.watchFile('./stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
-    io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+    io.socket.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
   })
 }
 
