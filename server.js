@@ -87,13 +87,21 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start-stream', function(){
-    console.log('start-stream received')
-    startStreaming(io);
+    console.log('startStreaming function initiated')
+
+    var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "50"];
+    proc = spawn('raspistill', args);
+
+    console.log('Watching for changes...');
+    app.set('watchingFile', true);
+    fs.watchFile('./stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
+      socket.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+    })
   })
 
   socket.on('stop-stream', function(){
     console.log('stop-stream received')
-    stopStreaming(io);
+    stopStreaming();
   })
 });
 
