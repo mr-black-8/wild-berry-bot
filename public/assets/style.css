@@ -1,0 +1,10 @@
+body {
+  background: gainsboro;
+}
+
+.mjpeg {
+  width: 480px;
+  height: 360px;
+  border: 1px solid blue;
+  box-sizing: border-box;
+}

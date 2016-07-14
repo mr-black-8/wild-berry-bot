@@ -96,6 +96,7 @@ $(document).ready(function(){
   $("#pause").on('click', function() {
     console.log('sent stop-stream call')
     socket.emit('stop-stream');
+    $("#stream").attr('src', '')
   });
 
   // update img url as received

@@ -87,49 +87,23 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start-stream', function(){
-    console.log('startStreaming function initiated')
+    console.log('MJPEG stream initiated')
 
-    var args = ["-w", "640", "-h", "480", "-o", "./public/stream/image_stream.jpg", "-t", "999999999", "-tl", "50"];
+    var args = ["-w", "480", "-h", "360", "-o", "./public/stream/image_stream.jpg", "-t", "999999999", "-tl", "50", "-n"];
     proc = spawn('raspistill', args);
 
-    console.log('Watching for changes...');
     app.set('watchingFile', true);
-    fs.watchFile('./stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
-      console.log('inside watchFile')
-      socket.emit('livestream', '/public/stream/image_stream.jpg?_t=' + (Math.random() * 100000));
-      console.log('livestream emitted...')
+    fs.watchFile('./public/stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
+      socket.emit('livestream', 'stream/image_stream.jpg?_t=' + (Math.random() * 100000));
     })
   })
 
   socket.on('stop-stream', function(){
-    console.log('stop-stream received')
-    stopStreaming();
+    console.log('MJPEG steam terminated')
+    app.set('watchingFile', false);
+    if (proc) proc.kill();
+    fs.unwatchFile('./stream/image_stream.jpg');
   })
 });
-
-function stopStreaming() {
-  console.log('stopStreaming function initiated')
-  app.set('watchingFile', false);
-  if (proc) proc.kill();
-  fs.unwatchFile('./stream/image_stream.jpg');
-}
-
-function startStreaming(io) {
-  console.log('startStreaming function initiated')
-  // if (app.get('watchingFile')) {
-  //   io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
-  //   return;
-  // }
-
-  var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "50"];
-  proc = spawn('raspistill', args);
-
-  console.log('Watching for changes...');
-  app.set('watchingFile', true);
-  fs.watchFile('./stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
-    io.socket.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
-  })
-}
-
 
 console.log('Waiting for connection');
