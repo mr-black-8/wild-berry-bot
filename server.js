@@ -105,10 +105,10 @@ function stopStreaming() {
 
 function startStreaming(io) {
   console.log('startStreaming function initiated')
-  if (app.get('watchingFile')) {
-    io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
-    return;
-  }
+  // if (app.get('watchingFile')) {
+  //   io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+  //   return;
+  // }
 
   var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "50"];
   proc = spawn('raspistill', args);
