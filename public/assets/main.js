@@ -88,8 +88,13 @@ $(document).ready(function(){
   });
 // MJPEG handler
   // send request to start stream on page load
-  $("#play")socket.emit('start-stream');
-  $("#pause")socket.emit('stop-stream');
+  $("#play").on('click', function() {
+    socket.emit('start-stream');
+  });
+
+  $("#pause").on('click', function() {
+    socket.emit('stop-stream');
+  });
 
   // update img url as received
   socket.on('livestream', function(url) {
