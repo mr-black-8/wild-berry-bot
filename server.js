@@ -95,7 +95,9 @@ io.on('connection', function(socket) {
     console.log('Watching for changes...');
     app.set('watchingFile', true);
     fs.watchFile('./stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
+      console.log('inside watchFile')
       socket.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+      console.log('livestream emitted...')
     })
   })
 
