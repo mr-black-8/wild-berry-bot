@@ -11,12 +11,20 @@
 
     <h1>Steering Motor</h1>
   <div class="container">
-    <button id="left">Left</button>
-    <button id="right">Right</button>
-    <button id="fwd">Forward</button>
-    <button id="rev">Reverse</button>
-    <input id='pwr' type="range" min="100" max="255" step="1" value="100">
+    <div class="controls">
+      <button id="left">Left</button>
+      <button id="right">Right</button>
+      <button id="fwd">Forward</button>
+      <button id="rev">Reverse</button>
+      <input id='pwr' type="range" min="100" max="255" step="1" value="200">
+    </div>
+    <div class="mjpeg">
+      <img src="" id="stream">
+      <button id="play">Play</button>
+      <button id="pause">Pause</button>
+    </div>
   </div>
+
 
 </body>
 </html>

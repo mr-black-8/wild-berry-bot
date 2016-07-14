@@ -1,7 +1,7 @@
 var socket = io.connect();
 
 $(document).ready(function(){
-
+// Keyboard controls for motors
   $("body").keydown(function(event){
     switch (event.which) {
       case 38:
@@ -41,7 +41,7 @@ $(document).ready(function(){
       default:
     }
   });
-
+// Button controls for motors
   $('#left').mousedown(function(){
     socket.emit('turn:left');
     console.log('TURN LEFT');
@@ -86,5 +86,13 @@ $(document).ready(function(){
     socket.emit('updatePwr', $(this).val())
     console.log('UPDATE DRIVE PWR TO: ' + $(this).val())
   });
+// MJPEG handler
+  // send request to start stream on page load
+  $("#play")socket.emit('start-stream');
+  $("#pause")socket.emit('stop-stream');
 
+  // update img url as received
+  socket.on('livestream', function(url) {
+    $("#stream").attr('src', url)
+  });
 });

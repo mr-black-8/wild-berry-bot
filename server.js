@@ -4,6 +4,8 @@ var httpServer = require("http").createServer(app);
 var five = require("johnny-five");
 var raspi = require("raspi-io");
 var io = require('socket.io')(httpServer);
+var fs = require('fs')
+var spawn = require('child_process').spawn
 
 var port = 3000;
 
@@ -82,6 +84,37 @@ io.on('connection', function(socket) {
     drivePwr = data;
     console.log('NEW DRIVE POWER: ' + data);
   });
+
+  socket.on('start-stream', function(){
+    startStreaming(io);
+  })
+
+  socket.on('stop-stream', function(){
+    stopStreaming(io);
+  })
 });
+
+function stopStreaming() {
+  app.set('watchingFile', false);
+  if (proc) proc.kill();
+  fs.unwatchFile('./stream/image_stream.jpg');
+}
+
+function startStreaming(io) {
+  if (app.get('watchingFile')) {
+    io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+    return;
+  }
+
+  var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "50"];
+  proc = spawn('raspistill', args);
+
+  console.log('Watching for changes...');
+  app.set('watchingFile', true);
+  fs.watchFile('./stream/image_stream.jpg', { persistent: true, interval: 25 }, function(current, previous) {
+    io.sockets.emit('liveStream', './stream/image_stream.jpg?_t=' + (Math.random() * 100000));
+  })
+}
+
 
 console.log('Waiting for connection');
