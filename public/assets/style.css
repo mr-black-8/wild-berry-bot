@@ -18,6 +18,7 @@ body {
 }
 
 .controls {
+  width: 177px;
   margin-left: 50px;
 }
 
@@ -65,7 +66,7 @@ input[type=range] {
   -webkit-appearance: none;
   margin: 10px 0;
   width: 300px;
-  transform: rotate(90deg) translate(-50%);
+  transform: rotate(-90deg) translate(50%);
 }
 input[type=range]:focus {
   outline: none;
